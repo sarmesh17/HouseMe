@@ -1,11 +1,10 @@
-package com.sharkdroid.houseme.presentation.addroomscreen
+package com.sharkdroid.houseme.presentation.roomscreen.addroomscreen
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -60,17 +58,17 @@ fun AddRoomScreen() {
         colors = listOf(colorResource(id = R.color.Vivid_Sky_Blue), colorResource(id = R.color.Sea_Green))
     )
 
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    var selectedImageUriSecond by remember { mutableStateOf<Uri?>(null) }
+    var selectedCoverImage by remember { mutableStateOf<Uri?>(null) }
+    var selectedFoodImage by remember { mutableStateOf<Uri?>(null) }
 
     var description by remember {
         mutableStateOf("")
     }
     var checkIn by remember {
-        mutableStateOf("CheckIn :")
+        mutableStateOf("")
     }
     var checkOut by remember {
-        mutableStateOf("CheckOut :")
+        mutableStateOf("")
     }
 
     Column (
@@ -96,14 +94,14 @@ fun AddRoomScreen() {
                     contract = ActivityResultContracts.GetContent(),
                     onResult = { uri: Uri? ->
                         // Handle the image URI (set it to state)
-                        selectedImageUri = uri
+                        selectedCoverImage = uri
                     }
                 )
 
 
-                if (selectedImageUri != null) {
+                if (selectedCoverImage != null) {
                     Image(
-                        painter = rememberAsyncImagePainter(selectedImageUri),
+                        painter = rememberAsyncImagePainter(selectedCoverImage),
                         contentDescription = null,
                         modifier = Modifier
                             .size(350.dp,200.dp),
@@ -142,7 +140,7 @@ fun AddRoomScreen() {
                         .fillMaxWidth()
                         .height(100.dp)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -151,9 +149,9 @@ fun AddRoomScreen() {
                 ) {
                     Image(painter = painterResource(id = R.drawable.location_circle), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(text = "Address")
+                    Text(text = "Address", fontSize = 20.sp)
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -162,44 +160,43 @@ fun AddRoomScreen() {
                 ) {
                     Image(painter = painterResource(id = R.drawable.checkin), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
                     Spacer(modifier = Modifier.width(10.dp))
-                    BasicTextField(value = checkIn, onValueChange ={checkIn = it}, modifier = Modifier.border(width = 1.dp, color = Color.Gray) )
+                    /*BasicTextField(value = checkIn, onValueChange ={checkIn = it}, modifier = Modifier
+                        .border(width = 1.dp, color = Color.Gray)
+                        .height(32.dp))*/
+                    OutlinedTextField(value = checkIn, onValueChange ={checkIn = it}, modifier = Modifier.width(110.dp), label = { Text(
+                        text = "Check In"
+                    )} )
 
 
-                    Spacer(modifier = Modifier.width(32.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
 
 
                     Image(painter = painterResource(id = R.drawable.checkout), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
                     Spacer(modifier = Modifier.width(10.dp))
-                    BasicTextField(value = checkOut, onValueChange ={checkOut = it}, modifier = Modifier.border(width = 1.dp, color = Color.Gray) )
+                    /*BasicTextField(value = checkOut, onValueChange ={checkOut = it}, modifier = Modifier.border(width = 1.dp, color = Color.Gray) )*/
+                    OutlinedTextField(value = checkOut, onValueChange ={checkOut = it}, modifier = Modifier.width(130.dp) , label = { Text(
+                        text = "Check Out"
+                    )})
+
                 }
 
                 Spacer(modifier = Modifier.height(32.dp))
                 HorizontalDivider(color = Color.Gray)
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Food Image",
-                        fontFamily = robotoFamily,
-                        fontSize = 23.sp
-                    )
-                }
                 Spacer(modifier = Modifier.height(8.dp))
 
                 val imagePickerLauncherSecond = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent(),
                     onResult = { uri: Uri? ->
                         // Handle the image URI (set it to state)
-                        selectedImageUriSecond = uri
+                        selectedFoodImage= uri
                     }
                 )
 
-                if (selectedImageUriSecond != null) {
+                if (selectedFoodImage != null) {
                     Image(
-                        painter = rememberAsyncImagePainter(selectedImageUriSecond),
+                        painter = rememberAsyncImagePainter(selectedFoodImage),
                         contentDescription = null,
                         modifier = Modifier
                             .size(350.dp,200.dp),
@@ -213,6 +210,18 @@ fun AddRoomScreen() {
                             .size(350.dp, 200.dp)
                             .clickable { imagePickerLauncher.launch("image/*") }, // Trigger image picker when clicking the placeholder
                         contentScale = ContentScale.Crop
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Food Image",
+                        fontFamily = robotoFamily,
+                        fontSize = 23.sp
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))

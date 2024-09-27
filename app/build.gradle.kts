@@ -86,10 +86,14 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-    implementation("io.coil-kt:coil-compose:2.7.0")
 
+    // firebase
     implementation ("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation ("com.google.firebase:firebase-auth:22.1.1")
     implementation ("com.google.firebase:firebase-storage-ktx:20.2.0")
+
+    // coil
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 
 }

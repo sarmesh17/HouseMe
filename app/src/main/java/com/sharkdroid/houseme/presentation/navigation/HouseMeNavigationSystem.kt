@@ -28,7 +28,7 @@ fun HouseMeNavigation() {
 
             val viewModel:SigInScreenViewModel= hiltViewModel()
 
-          SignInScreen(signinScreen = viewModel , navHostController = navController)
+          SignInScreen( sigInScreenViewModel = viewModel , navHostController = navController)
         }
 
     }

@@ -16,4 +16,5 @@ sealed class Routes {
     @Serializable
     data object Places:Routes()
 
+
 }

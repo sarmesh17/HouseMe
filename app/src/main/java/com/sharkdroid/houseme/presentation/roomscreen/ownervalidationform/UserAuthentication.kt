@@ -1,4 +1,4 @@
-package com.sharkdroid.houseme.presentation.userauthentication
+package com.sharkdroid.houseme.presentation.roomscreen.ownervalidationform
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
