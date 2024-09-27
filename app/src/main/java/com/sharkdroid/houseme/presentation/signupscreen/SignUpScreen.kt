@@ -1,5 +1,10 @@
 package com.sharkdroid.houseme.presentation.signupscreen
 
+import android.app.Activity.RESULT_OK
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,10 +17,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -31,7 +38,7 @@ import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.presentation.viewmodel.SignUpScreenViewModel
 
 @Composable
-fun SignUpForm(
+fun SignUpScreen(
     signUpScreenViewModel: SignUpScreenViewModel,
     navHostController: NavHostController
 ) {
@@ -62,6 +69,38 @@ fun SignUpForm(
     )
 
     val signUpResult = signUpScreenViewModel.signUpResult.collectAsState()
+
+    val context = LocalContext.current
+
+    val intentSender by signUpScreenViewModel.intentSenderLiveData.observeAsState()
+    val loginSuccess by signUpScreenViewModel.loginSuccessLiveData.observeAsState()
+    val error by signUpScreenViewModel.errorLiveData.observeAsState()
+
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) { result->
+
+            if (result.resultCode == RESULT_OK){
+                signUpScreenViewModel.handleSignUpResult(result.data)
+            } else {
+                Log.e("SignInFailure","Sign-in failed with resultCode: ${result.resultCode}")
+                result.data?.let {
+                    val errorMessage = it.getStringExtra("error_message")
+                    Log.e("SignInFailure", "Error Message: $errorMessage")
+                }
+            }
+        }
+
+    LaunchedEffect(intentSender) {
+        intentSender?.let{
+            launcher.launch(IntentSenderRequest.Builder(it).build())
+        }
+    }
+
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess== true){
+            navHostController.navigate(Routes.HomeScreen)
+        }
+    }
 
     when (signUpResult.value) {
 
@@ -252,7 +291,9 @@ fun SignUpForm(
                                 Text(text = "Facebook", fontSize = 18.sp, fontFamily = robotoFamily)
                             }
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    signUpScreenViewModel.startSignUp()
+                                },
                                 modifier = Modifier.size(145.dp, 45.dp),
                                 shape = RoundedCornerShape(14.dp),
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.Dark_Red))

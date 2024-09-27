@@ -1,6 +1,10 @@
 package com.sharkdroid.houseme.presentation.siginscreen
 
+import android.app.Activity.RESULT_OK
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +50,7 @@ import com.sharkdroid.houseme.presentation.common.LoadingScreen
 import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.livedata.observeAsState
 
 @Composable
 fun SignInScreen(
@@ -80,6 +87,37 @@ fun SignInScreen(
     }
 
     val coroutine= rememberCoroutineScope()
+    val context = LocalContext.current
+
+    val intentSender by sigInScreenViewModel.intentSenderLiveData.observeAsState()
+    val loginSuccess by sigInScreenViewModel.loginSuccessLiveData.observeAsState()
+    val error by sigInScreenViewModel.errorLiveData.observeAsState()
+
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) { result->
+
+            if (result.resultCode == RESULT_OK){
+                sigInScreenViewModel.handleSignInResult(result.data)
+            } else {
+                Log.e("SignInFailure","Sign-in failed with resultCode: ${result.resultCode}")
+                result.data?.let {
+                    val errorMessage = it.getStringExtra("error_message")
+                    Log.e("SignInFailure", "Error Message: $errorMessage")
+                }
+            }
+        }
+
+    LaunchedEffect(intentSender) {
+        intentSender?.let{
+            launcher.launch(IntentSenderRequest.Builder(it).build())
+        }
+    }
+
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess== true){
+            navHostController.navigate(Routes.HomeScreen)
+        }
+    }
 
 
     when(resultStatus.value){
@@ -252,7 +290,9 @@ fun SignInScreen(
 
                             // google login button
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    sigInScreenViewModel.startSignIn()
+                                },
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.size(160.dp, 43.dp),
                                 colors = ButtonDefaults.buttonColors(
