@@ -321,7 +321,12 @@ fun SignInScreen(
                         Row {
 
                             Text(text = "Don't have an account? ")
-                            Text(text = "Sign Up ", fontSize = 16.sp, color = colorResource(id = R.color.Caribbean_Green))
+                            Text(
+                                text = "Sign Up ",
+                                fontSize = 16.sp,
+                                color = colorResource(id = R.color.Caribbean_Green),
+                                modifier = Modifier.clickable { navHostController.navigate(Routes.SignUpScreen) }
+                            )
 
                         }
 

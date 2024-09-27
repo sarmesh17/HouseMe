@@ -319,7 +319,7 @@ fun SignUpScreen(
                                 text = " Sign In",
                                 fontFamily = robotoFamily,
                                 color = Color.Green,
-                                modifier = Modifier.clickable { }
+                                modifier = Modifier.clickable { navHostController.navigate(Routes.SigInScreen) }
                             )
                         }
 
