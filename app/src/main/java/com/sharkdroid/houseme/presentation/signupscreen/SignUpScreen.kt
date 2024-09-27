@@ -332,12 +332,15 @@ fun SignUpScreen(
 
         is Result.Loading -> {
 
-            LoadingScreen()
+           LoadingScreen()
         }
 
         is Result.Success -> {
 
-            navHostController.navigate(Routes.SigInScreen)
+            LaunchedEffect (key1 = true){
+                navHostController.navigate(Routes.HomeScreen)
+
+            }
 
         }
 

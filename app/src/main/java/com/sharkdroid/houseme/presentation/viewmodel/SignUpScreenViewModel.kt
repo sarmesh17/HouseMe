@@ -40,33 +40,37 @@ class SignUpScreenViewModel @Inject constructor(
         viewModelScope.launch {
             _signUpResult.value=Result.Loading()
             firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
+                .addOnSuccessListener { task ->
                     try {
-
-                        if (task.isSuccessful) {
                             // User registered successfully, store user data
-                            _signUpResult.value=Result.Success(Unit)
                             val user = firebaseAuth.currentUser
-                            user?.let {
-                                saveUserData(it.uid, email, name, mobileNumber)
-                            }
+                        user?.let {
+                            saveUserData(it.uid, email, name, mobileNumber)
+                            _signUpResult.value=Result.Success(Unit)
                         }
+
                     }catch (e: Exception){
+
                         _signUpResult.value=Result.Error(e.message?:"Unknown error occurred")
+
                     }
                 }
         }
     }
 
     private fun saveUserData(userId: String, email: String, name: String, mobileNumber: String) {
-        val userRef = database.getReference("users").child(userId)
-        val user = User(email, name, mobileNumber)
+        viewModelScope.launch {
 
-        userRef.setValue(user).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                println("User data saved successfully!")
-            } else {
-                println("Failed to save user data: ${task.exception?.message}")
+
+            val userRef = database.getReference("users").child(userId)
+            val user = User(email, name, mobileNumber)
+
+            userRef.setValue(user).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    println("User data saved successfully!")
+                } else {
+                    println("Failed to save user data: ${task.exception?.message}")
+                }
             }
         }
     }
