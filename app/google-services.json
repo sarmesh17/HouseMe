@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "293246541079",
+    "project_id": "house-me-ecddb",
+    "storage_bucket": "house-me-ecddb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293246541079:android:a061ce810915d3967d6b52",
+        "android_client_info": {
+          "package_name": "com.sharkdroid.houseme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCrfT3bBAnBs0XHo3uZVvtg04Y7XhDNNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
