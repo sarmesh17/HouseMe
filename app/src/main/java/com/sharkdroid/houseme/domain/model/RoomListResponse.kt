@@ -9,6 +9,7 @@ data class RoomData(
     val price: String? = null,
     val roomImageUrl: String? = null,
     val roomName: String?=null,
+    val propertyLocation:String?=null
 
     )
 

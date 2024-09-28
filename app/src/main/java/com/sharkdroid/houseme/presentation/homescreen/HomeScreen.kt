@@ -59,13 +59,14 @@ import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.presentation.bottomnavigation.BottomNavigation
 import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.R
+import com.sharkdroid.houseme.presentation.viewmodel.HomeScreenViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController,homeScreenViewModel: HomeScreenViewModel) {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
@@ -334,10 +335,10 @@ fun HomeScreen(navController: NavHostController) {
             }
 
 
+            //search button
             Spacer(modifier = Modifier.height(16.dp))
-            //create account button
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { homeScreenViewModel.searchRoomsByLocation(searchText)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)

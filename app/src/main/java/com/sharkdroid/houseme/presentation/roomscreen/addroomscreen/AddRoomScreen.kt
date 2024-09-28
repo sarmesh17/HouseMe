@@ -57,7 +57,10 @@ fun AddRoomScreen(
         colors = listOf(colorResource(id = R.color.Sea_Green), colorResource(id = R.color.Art_Blue))
     )
     val horizontalGradient = Brush.linearGradient(
-        colors = listOf(colorResource(id = R.color.Vivid_Sky_Blue), colorResource(id = R.color.Sea_Green))
+        colors = listOf(
+            colorResource(id = R.color.Vivid_Sky_Blue),
+            colorResource(id = R.color.Sea_Green)
+        )
     )
 
     var selectedRoomImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -82,24 +85,28 @@ fun AddRoomScreen(
         mutableStateOf("")
     }
 
-    Column (
+    var propertyLocation by remember {
+        mutableStateOf("")
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(brush = gradient)
             .padding(top = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Box (
+    ) {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(16.dp))
                 .padding(16.dp)
-        ){
+        ) {
             Column(
                 modifier = Modifier.padding(2.dp)
-            ){
+            ) {
 
                 val imagePickerLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent(),
@@ -115,7 +122,7 @@ fun AddRoomScreen(
                         painter = rememberAsyncImagePainter(selectedRoomImageUri),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(350.dp,200.dp),
+                            .size(350.dp, 200.dp),
                         contentScale = ContentScale.Crop
                     )
                 } else {
@@ -144,21 +151,21 @@ fun AddRoomScreen(
 
                 OutlinedTextField(
                     value = roomName,
-                    onValueChange = { roomName = it},
+                    onValueChange = { roomName = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(text = "Room Name")
                     }
                 )
 
-                Row (
+                Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     OutlinedTextField(
                         value = price,
-                        onValueChange = { price = it},
+                        onValueChange = { price = it },
                         modifier = Modifier.width(158.dp),
                         label = {
                             Text(text = "Price")
@@ -167,7 +174,7 @@ fun AddRoomScreen(
 
                     OutlinedTextField(
                         value = discount,
-                        onValueChange = { discount = it},
+                        onValueChange = { discount = it },
                         modifier = Modifier.width(158.dp),
                         label = {
                             Text(text = "Discount")
@@ -191,9 +198,23 @@ fun AddRoomScreen(
                         .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(painter = painterResource(id = R.drawable.location_circle), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.location_circle),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp, 24.dp)
+                    )
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(text = "Address", fontSize = 20.sp)
+
+
+                    OutlinedTextField(
+                        value = propertyLocation, onValueChange = {
+                            propertyLocation = it
+                        }, modifier = Modifier.fillMaxWidth(),
+                        label = {
+                            Text(text = "Property Location")
+                        }
+                    )
+
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
@@ -202,25 +223,45 @@ fun AddRoomScreen(
                         .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(painter = painterResource(id = R.drawable.checkin), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.checkin),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp, 24.dp)
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
                     /*BasicTextField(value = checkIn, onValueChange ={checkIn = it}, modifier = Modifier
                         .border(width = 1.dp, color = Color.Gray)
                         .height(32.dp))*/
-                    OutlinedTextField(value = checkIn, onValueChange ={checkIn = it}, modifier = Modifier.width(110.dp), label = { Text(
-                        text = "Check In"
-                    )} )
+                    OutlinedTextField(
+                        value = checkIn,
+                        onValueChange = { checkIn = it },
+                        modifier = Modifier.width(110.dp),
+                        label = {
+                            Text(
+                                text = "Check In"
+                            )
+                        })
 
 
                     Spacer(modifier = Modifier.width(8.dp))
 
 
-                    Image(painter = painterResource(id = R.drawable.checkout), contentDescription = null, modifier = Modifier.size(18.dp,24.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.checkout),
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp, 24.dp)
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
                     /*BasicTextField(value = checkOut, onValueChange ={checkOut = it}, modifier = Modifier.border(width = 1.dp, color = Color.Gray) )*/
-                    OutlinedTextField(value = checkOut, onValueChange ={checkOut = it}, modifier = Modifier.width(130.dp) , label = { Text(
-                        text = "Check Out"
-                    )})
+                    OutlinedTextField(
+                        value = checkOut,
+                        onValueChange = { checkOut = it },
+                        modifier = Modifier.width(130.dp),
+                        label = {
+                            Text(
+                                text = "Check Out"
+                            )
+                        })
 
                 }
 
@@ -234,7 +275,7 @@ fun AddRoomScreen(
                     contract = ActivityResultContracts.GetContent(),
                     onResult = { uri: Uri? ->
                         // Handle the image URI (set it to state)
-                        selectedFoodImageUri= uri
+                        selectedFoodImageUri = uri
                     }
                 )
 
@@ -243,7 +284,7 @@ fun AddRoomScreen(
                         painter = rememberAsyncImagePainter(selectedFoodImageUri),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(350.dp,200.dp),
+                            .size(350.dp, 200.dp),
                         contentScale = ContentScale.Crop
                     )
                 } else {
@@ -272,12 +313,22 @@ fun AddRoomScreen(
 
                 Button(
                     onClick = {
-                        addRoomFormViewModel.uploadRoomAndFoodImages(foodImageUri = selectedFoodImageUri, roomImageUri = selectedRoomImageUri, description = description, checkIn = checkIn, checkOut = checkOut, roomName = roomName, price = price, discount = discount);
-                        selectedFoodImageUri=null
-                        selectedRoomImageUri=null
-                        description=""
-                        checkIn=""
-                        checkOut=""
+                        addRoomFormViewModel.uploadRoomAndFoodImages(
+                            foodImageUri = selectedFoodImageUri,
+                            roomImageUri = selectedRoomImageUri,
+                            description = description,
+                            checkIn = checkIn,
+                            checkOut = checkOut,
+                            roomName = roomName,
+                            price = price,
+                            discount = discount,
+                            propertyLocation = propertyLocation
+                        )
+                        selectedFoodImageUri = null
+                        selectedRoomImageUri = null
+                        description = ""
+                        checkIn = ""
+                        checkOut = ""
 
                     },
                     modifier = Modifier

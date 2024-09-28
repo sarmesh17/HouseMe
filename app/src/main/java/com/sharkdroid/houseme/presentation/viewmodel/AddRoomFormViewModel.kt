@@ -23,7 +23,8 @@ class AddRoomFormViewModel @Inject constructor(
         price: String,
         discount: String,
         checkIn: String,
-        checkOut: String
+        checkOut: String,
+        propertyLocation:String
     ) {
         val databaseReference = firebaseDatabase.reference.child("RoomForm").push()
 
@@ -46,7 +47,8 @@ class AddRoomFormViewModel @Inject constructor(
                             price,
                             discount,
                             checkIn,
-                            checkOut
+                            checkOut,
+                            propertyLocation
                         )
                     }
                 }
@@ -68,7 +70,8 @@ class AddRoomFormViewModel @Inject constructor(
                             price,
                             discount,
                             checkIn,
-                            checkOut
+                            checkOut,
+                            propertyLocation
                         )
                     }
                 }
@@ -84,7 +87,8 @@ class AddRoomFormViewModel @Inject constructor(
         price: String,
         discount: String,
         checkIn: String,
-        checkOut: String
+        checkOut: String,
+        propertyLocation: String
     ) {
         if (roomImageUrl != null || foodImageUrl != null) {
             val roomData = RoomData(
@@ -95,7 +99,8 @@ class AddRoomFormViewModel @Inject constructor(
                 description = description,
                 checkIn = checkIn,
                 checkOut = checkOut,
-                foodImageUrl = foodImageUrl
+                foodImageUrl = foodImageUrl,
+                propertyLocation =propertyLocation
             )
             saveRoomData(databaseReference, roomData)
         }

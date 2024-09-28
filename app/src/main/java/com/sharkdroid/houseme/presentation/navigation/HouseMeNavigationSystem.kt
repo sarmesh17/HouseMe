@@ -12,6 +12,7 @@ import com.sharkdroid.houseme.presentation.roomscreen.ownervalidationform.OwnerV
 import com.sharkdroid.houseme.presentation.siginscreen.SignInScreen
 import com.sharkdroid.houseme.presentation.signupscreen.SignUpScreen
 import com.sharkdroid.houseme.presentation.viewmodel.AddRoomFormViewModel
+import com.sharkdroid.houseme.presentation.viewmodel.HomeScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.HouseListScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
@@ -24,11 +25,12 @@ fun HouseMeNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.RoomScreen
+        startDestination = Routes.SigInScreen
     ) {
 
         composable<Routes.HomeScreen> {
-            HomeScreen(navController)
+            val homeScreenViewModel:HomeScreenViewModel = hiltViewModel()
+            HomeScreen(navController, homeScreenViewModel)
         }
 
         composable<Routes.SigInScreen> {
