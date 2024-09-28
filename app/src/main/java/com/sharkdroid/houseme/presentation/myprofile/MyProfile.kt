@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import com.sharkdroid.houseme.R
 
 @Composable
-@Preview(showSystemUi= true)
 fun MyProfile() {
     val horizontalGradient = Brush.linearGradient(
         colors = listOf(
@@ -39,6 +38,7 @@ fun MyProfile() {
             colorResource(id = R.color.Sea_Green)
         )
     )
+
     Column {
 
 
@@ -111,7 +111,7 @@ Row(modifier = Modifier
     )
 Spacer(modifier = Modifier.width(30.dp))
     Text(text = "Edit Profile", fontSize = 20.sp, color = Color.White)
-    Spacer(modifier = Modifier.width(170.dp))
+    Spacer(modifier = Modifier.weight(1f))
     Icon(
         painter = painterResource(id = R.drawable.rightarrow),
         contentDescription = null,
@@ -144,7 +144,7 @@ Spacer(modifier = Modifier.width(30.dp))
                 )
                 Spacer(modifier = Modifier.width(30.dp))
                 Text(text = "Booking History", fontSize = 20.sp, color = Color.White)
-                Spacer(modifier = Modifier.width(130.dp))
+                Spacer(modifier = Modifier.weight(1f))
                 Icon(
                     painter = painterResource(id = R.drawable.rightarrow),
                     contentDescription = null,
@@ -177,7 +177,7 @@ Spacer(modifier = Modifier.width(30.dp))
                 )
                 Spacer(modifier = Modifier.width(30.dp))
                 Text(text = "Share App", fontSize = 20.sp, color = Color.White)
-                Spacer(modifier = Modifier.width(170.dp))
+                Spacer(modifier = Modifier.weight(1f))
                 Icon(
                     painter = painterResource(id = R.drawable.rightarrow),
                     contentDescription = null,
