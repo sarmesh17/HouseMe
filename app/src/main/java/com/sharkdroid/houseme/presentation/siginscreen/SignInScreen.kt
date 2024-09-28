@@ -76,6 +76,8 @@ fun SignInScreen(
 
     val resultStatus = sigInScreenViewModel.signInResult.collectAsState()
 
+    val coroutineScope= rememberCoroutineScope()
+
 
     var email by remember {
 
@@ -258,6 +260,11 @@ fun SignInScreen(
 
                                     email = "";
                                     password = ""
+
+                                    coroutine.launch {
+
+                                        sigInScreenViewModel.saveAppEntry()
+                                    }
 
                                 }, contentAlignment = Alignment.Center
                         ) {

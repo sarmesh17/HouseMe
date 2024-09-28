@@ -338,7 +338,9 @@ fun HomeScreen(navController: NavHostController,homeScreenViewModel: HomeScreenV
             //search button
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { homeScreenViewModel.searchRoomsByLocation(searchText)},
+                onClick = { homeScreenViewModel.searchRoomsByLocation(searchText);
+                          navController.navigate(Routes.HotelListScreen)
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
