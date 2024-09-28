@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.R
 import com.sharkdroid.houseme.domain.model.Result
+import com.sharkdroid.houseme.presentation.common.ErrorDialogBox
 import com.sharkdroid.houseme.presentation.common.LoadingScreen
 import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
@@ -306,6 +307,12 @@ fun SignInScreen(
         }
 
         is Result.Error -> {
+
+            val error= remember {
+                mutableStateOf(sigInScreenViewModel.signInResult.value.message)
+            }
+
+            error.value?.let { ErrorDialogBox(error = it) }
 
 
 

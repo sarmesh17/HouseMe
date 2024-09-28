@@ -35,7 +35,9 @@ import androidx.compose.ui.window.DialogProperties
 import com.sharkdroid.houseme.R
 
 @Composable
-fun ErrorDialogBox() {
+fun ErrorDialogBox(
+    error:String
+) {
     val horizontalGradient = Brush.linearGradient(
         colors = listOf(
             colorResource(id = R.color.Vivid_Sky_Blue),
@@ -82,7 +84,7 @@ fun ErrorDialogBox() {
                         .height(40.dp), contentAlignment = Alignment.Center
                 )
                 {
-                    Text(text = "error ", fontSize = 20.sp, fontFamily = robotoFamily)
+                    Text(text = error, fontSize = 20.sp, fontFamily = robotoFamily)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 

@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HouseMeTheme {
-                SuccessDialog()
             }
         }
     }
