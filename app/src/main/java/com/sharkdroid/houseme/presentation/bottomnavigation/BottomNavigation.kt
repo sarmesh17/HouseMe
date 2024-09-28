@@ -33,7 +33,7 @@ fun BottomNavigation(onClick:(index:Int) -> Unit, selectedItem: Int){
     val items = listOf(
         NavigationItem("Home", R.drawable.home_icon, R.drawable.home_icon),
         NavigationItem("Places", R.drawable.place_icon, R.drawable.place_icon),
-        NavigationItem("AddRoom", R.drawable.outline_add_room24, R.drawable.outline_add_room24),
+        NavigationItem("AddRoom", R.drawable.outline_add_business_24, R.drawable.outline_add_business_24),
         NavigationItem("Booking", R.drawable.history_icon, R.drawable.history_icon),
         NavigationItem("MyProfile", R.drawable.profile_icon, R.drawable.profile_icon)
     )

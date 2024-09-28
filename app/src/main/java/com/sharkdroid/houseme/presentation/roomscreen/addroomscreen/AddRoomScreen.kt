@@ -72,6 +72,9 @@ fun AddRoomScreen(
     var checkOut by remember {
         mutableStateOf("")
     }
+    var roomName by remember {
+        mutableStateOf("")
+    }
 
     Column (
         modifier = Modifier
@@ -132,6 +135,41 @@ fun AddRoomScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = roomName,
+                    onValueChange = { roomName = it},
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "Room Name")
+                    }
+                )
+
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ){
+                    OutlinedTextField(
+                        value = roomName,
+                        onValueChange = { roomName = it},
+                        modifier = Modifier.width(158.dp),
+                        label = {
+                            Text(text = "Price")
+                        }
+                    )
+
+                    OutlinedTextField(
+                        value = roomName,
+                        onValueChange = { roomName = it},
+                        modifier = Modifier.width(158.dp),
+                        label = {
+                            Text(text = "Discount")
+                        }
+                    )
+                }
+
+
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },

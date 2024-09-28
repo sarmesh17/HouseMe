@@ -210,7 +210,7 @@ fun HomeScreen(navController: NavHostController) {
                     filteredLocations.forEach { location ->
                         androidx.compose.material.DropdownMenuItem(onClick = {
                             searchText = location.name
-                            expanded = true
+                            expanded = false
                         }) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(

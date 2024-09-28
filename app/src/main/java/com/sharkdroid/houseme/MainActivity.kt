@@ -29,9 +29,10 @@ class MainActivity : ComponentActivity() {
             HouseMeTheme {
 
 //                OwnerAuthorizationForm(ownerAuthViewModel = ownerAuthViewModel )
-                AddRoomScreen(addRoomFormViewModel = addRoomFormViewModel)
+                /*AAddRoomScreen(addRoomFormViewModel = addRoomFormViewModel)
 
-                HouseMeNavigation()
+                HouseMeNavigation()*/
+                AddRoomScreen(addRoomFormViewModel  )
             }
         }
     }
