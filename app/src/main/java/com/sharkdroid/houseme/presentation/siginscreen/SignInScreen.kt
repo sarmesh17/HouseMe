@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.R
 import com.sharkdroid.houseme.domain.model.Result
+import com.sharkdroid.houseme.presentation.common.ErrorDialogBox
 import com.sharkdroid.houseme.presentation.common.LoadingScreen
 import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
@@ -73,7 +74,7 @@ fun SignInScreen(
         )
     )
 
-    val resultStatus=sigInScreenViewModel.signInResult.collectAsState()
+    val resultStatus = sigInScreenViewModel.signInResult.collectAsState()
 
 
     var email by remember {
@@ -86,20 +87,19 @@ fun SignInScreen(
         mutableStateOf("")
     }
 
-    val coroutine= rememberCoroutineScope()
+    val coroutine = rememberCoroutineScope()
     val context = LocalContext.current
 
     val intentSender by sigInScreenViewModel.intentSenderLiveData.observeAsState()
     val loginSuccess by sigInScreenViewModel.loginSuccessLiveData.observeAsState()
-    val error by sigInScreenViewModel.errorLiveData.observeAsState()
 
     val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) { result->
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) { result ->
 
-            if (result.resultCode == RESULT_OK){
+            if (result.resultCode == RESULT_OK) {
                 sigInScreenViewModel.handleSignInResult(result.data)
             } else {
-                Log.e("SignInFailure","Sign-in failed with resultCode: ${result.resultCode}")
+                Log.e("SignInFailure", "Sign-in failed with resultCode: ${result.resultCode}")
                 result.data?.let {
                     val errorMessage = it.getStringExtra("error_message")
                     Log.e("SignInFailure", "Error Message: $errorMessage")
@@ -108,19 +108,19 @@ fun SignInScreen(
         }
 
     LaunchedEffect(intentSender) {
-        intentSender?.let{
+        intentSender?.let {
             launcher.launch(IntentSenderRequest.Builder(it).build())
         }
     }
 
     LaunchedEffect(loginSuccess) {
-        if (loginSuccess== true){
+        if (loginSuccess == true) {
             navHostController.navigate(Routes.HomeScreen)
         }
     }
 
 
-    when(resultStatus.value){
+    when (resultStatus.value) {
 
         is Result.Default -> {
 
@@ -171,7 +171,11 @@ fun SignInScreen(
                                 email = it
                             },
                             label = {
-                                Text(text = "Email", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = "Email",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
                             },
                             leadingIcon = {
 
@@ -203,7 +207,11 @@ fun SignInScreen(
                                 password = it
                             },
                             label = {
-                                Text(text = "Password", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = "Password",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
                             },
                             leadingIcon = {
 
@@ -243,15 +251,14 @@ fun SignInScreen(
                                 )
                                 .height(45.dp)
                                 .clickable {
-                                    coroutine.launch {
+                                    sigInScreenViewModel.signInWithEmailPassword(
+                                        email,
+                                        password
+                                    )
 
-                                        sigInScreenViewModel.signInWithEmailPassword(
-                                            email,
-                                            password
-                                        )
-                                    }
                                     email = "";
                                     password = ""
+
                                 }, contentAlignment = Alignment.Center
                         ) {
 
@@ -282,7 +289,11 @@ fun SignInScreen(
                                 )
                             ) {
 
-                                Text(text = "Facebook", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = "Facebook",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
 
                             }
 
@@ -300,7 +311,11 @@ fun SignInScreen(
                                 )
                             ) {
 
-                                Text(text = "Google", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = "Google",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
 
                             }
 
@@ -311,8 +326,17 @@ fun SignInScreen(
 
                         Row {
 
-                            Text(text = "By creating an account, you are agree to our ", color = Color.Gray, fontSize = 12.sp)
-                            Text(text = "Term", color = colorResource(id = R.color.Caribbean_Green), fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+                            Text(
+                                text = "By creating an account, you are agree to our ",
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                            Text(
+                                text = "Term",
+                                color = colorResource(id = R.color.Caribbean_Green),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 12.sp
+                            )
 
                         }
 
@@ -340,28 +364,35 @@ fun SignInScreen(
 
         is Result.Loading -> {
 
-           LoadingScreen()
+            LoadingScreen()
 
         }
 
         is Result.Success -> {
 
-            Log.d("sigin","SiginSuccessful")
-            navHostController.navigate(Routes.HomeScreen)
+            LaunchedEffect(Unit) {
+                navHostController.navigate(Routes.HomeScreen)
+            }
+
 
         }
 
         is Result.Error -> {
 
+            val error = remember {
+                mutableStateOf(sigInScreenViewModel.signInResult.value.message)
+            }
 
-
+            error.value?.let {
+                ErrorDialogBox(error = it, onOkClick = {
+                    navHostController.navigate(Routes.SigInScreen)
+                })
+            }
 
         }
 
 
     }
-
-
 
 
 }

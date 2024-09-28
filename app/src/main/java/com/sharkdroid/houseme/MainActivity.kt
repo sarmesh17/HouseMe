@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.sharkdroid.houseme.presentation.navigation.HouseMeNavigation
+import com.sharkdroid.houseme.presentation.navigation.Routes
+import com.sharkdroid.houseme.presentation.roomscreen.addroomscreen.AddRoomScreen
 import com.sharkdroid.houseme.presentation.viewmodel.AddRoomFormViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
+
 import com.sharkdroid.houseme.ui.theme.HouseMeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +21,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HouseMeTheme {
-                HouseMeNavigation()
+               HouseMeNavigation()
+
+                //AddRoomScreen(addRoomFormViewModel = addRoomFormViewModel)
+
 
             }
         }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.sharkdroid.houseme.domain.model.RoomData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
 import javax.inject.Inject
@@ -14,80 +15,103 @@ class AddRoomFormViewModel @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val firebaseStorage: FirebaseStorage
 ):ViewModel() {
-        // Single method to upload both room cover image and food cover image
-        fun uploadRoomAndFoodImages(
-            roomImageUri: Uri?,
-            foodImageUri: Uri?,
-            description: String,
-            roomName:String,
-            price:String,
-            discount:String,
-            checkIn: String,
-            checkOut: String
-        ) {
-            // Store data in the same node
-            val databaseReference = firebaseDatabase.reference.child("RoomForm").push()
+    fun uploadRoomAndFoodImages(
+        roomImageUri: Uri?,
+        foodImageUri: Uri?,
+        description: String,
+        roomName: String,
+        price: String,
+        discount: String,
+        checkIn: String,
+        checkOut: String
+    ) {
+        val databaseReference = firebaseDatabase.reference.child("RoomForm").push()
 
-            // If room image is provided, upload it
-            roomImageUri?.let { roomUri ->
-                val roomImageRef = firebaseStorage.reference.child("RoomCoverImage/${UUID.randomUUID()}.jpg")
-                roomImageRef.putFile(roomUri)
-                    .addOnSuccessListener {
-                        roomImageRef.downloadUrl.addOnSuccessListener { roomImageUrl ->
-                            // Save room image URL to the Realtime Database node
-                            saveRoomData(databaseReference, roomImageUrl.toString(), description, checkIn, checkOut,roomName,price,discount)
-                        }
-                    }
-                    .addOnFailureListener {
-                        // Handle failure
-                    }
-            }
+        var roomImageUrl: String? = null
+        var foodImageUrl: String? = null
 
-            // If food image is provided, upload it
-            foodImageUri?.let { foodUri ->
-                val foodImageRef = firebaseStorage.reference.child("CoverFoodImage/${UUID.randomUUID()}.jpg")
-                foodImageRef.putFile(foodUri)
-                    .addOnSuccessListener {
-                        foodImageRef.downloadUrl.addOnSuccessListener { foodImageUrl ->
-                            // Save food image URL to the same node
-                            databaseReference.child("foodImageUrl").setValue(foodImageUrl.toString())
-                        }
+        roomImageUri?.let { roomUri ->
+            val roomImageRef = firebaseStorage.reference.child("RoomCoverImage/${UUID.randomUUID()}.jpg")
+            roomImageRef.putFile(roomUri)
+                .addOnSuccessListener {
+                    roomImageRef.downloadUrl.addOnSuccessListener { url ->
+                        roomImageUrl = url.toString()
+                        // Call saveRoomData only when both image URLs are uploaded
+                        saveRoomDataIfReady(
+                            databaseReference,
+                            roomImageUrl,
+                            foodImageUrl,
+                            description,
+                            roomName,
+                            price,
+                            discount,
+                            checkIn,
+                            checkOut
+                        )
                     }
-                    .addOnFailureListener {
-                        // Handle failure
-                    }
-            }
+                }
         }
 
-        // Save room details to Firebase Realtime Database
-        private fun saveRoomData(
-            databaseReference: DatabaseReference,
-            roomImageUrl: String,
-            description: String,
-            roomName:String,
-            price:String,
-            discount:String,
-            checkIn: String,
-            checkOut: String
-        ) {
-            val roomData = mapOf(
-                "roomImageUrl" to roomImageUrl,
-                "roomName" to roomName,
-                "price" to price,
-                "discount" to discount,
-                "description" to description,
-                "checkIn" to checkIn,
-                "checkOut" to checkOut
-            )
-
-            databaseReference.setValue(roomData)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Data stored successfully
-                    } else {
-                        // Failed to store data
+        foodImageUri?.let { foodUri ->
+            val foodImageRef = firebaseStorage.reference.child("CoverFoodImage/${UUID.randomUUID()}.jpg")
+            foodImageRef.putFile(foodUri)
+                .addOnSuccessListener {
+                    foodImageRef.downloadUrl.addOnSuccessListener { url ->
+                        foodImageUrl = url.toString()
+                        // Call saveRoomData only when both image URLs are uploaded
+                        saveRoomDataIfReady(
+                            databaseReference,
+                            roomImageUrl,
+                            foodImageUrl,
+                            description,
+                            roomName,
+                            price,
+                            discount,
+                            checkIn,
+                            checkOut
+                        )
                     }
                 }
         }
     }
+
+    private fun saveRoomDataIfReady(
+        databaseReference: DatabaseReference,
+        roomImageUrl: String?,
+        foodImageUrl: String?,
+        description: String,
+        roomName: String,
+        price: String,
+        discount: String,
+        checkIn: String,
+        checkOut: String
+    ) {
+        if (roomImageUrl != null || foodImageUrl != null) {
+            val roomData = RoomData(
+                roomImageUrl = roomImageUrl,
+                roomName = roomName,
+                price = price,
+                discount = discount,
+                description = description,
+                checkIn = checkIn,
+                checkOut = checkOut,
+                foodImageUrl = foodImageUrl
+            )
+            saveRoomData(databaseReference, roomData)
+        }
+    }
+
+    private fun saveRoomData(databaseReference: DatabaseReference, roomData: RoomData) {
+        databaseReference.setValue(roomData)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Data stored successfully
+                } else {
+                    // Failed to store data
+                }
+            }
+    }
+
+
+}
 

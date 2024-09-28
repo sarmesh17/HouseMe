@@ -24,7 +24,7 @@ fun HouseMeNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SigInScreen
+        startDestination = Routes.RoomScreen
     ) {
 
         composable<Routes.HomeScreen> {

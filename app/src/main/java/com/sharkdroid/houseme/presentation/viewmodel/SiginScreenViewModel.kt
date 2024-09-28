@@ -41,16 +41,17 @@ class SigInScreenViewModel @Inject constructor(
 
     fun signInWithEmailPassword( email:String, password:String){
 
+        _sigInResult.value = Result.Loading()
         viewModelScope.launch {
-
             try {
-                _sigInResult.value = Result.Loading()
 
                 // Firebase sign-in operation
                 firebaseAuth.signInWithEmailAndPassword(email, password).await()
 
                 _sigInResult.value = Result.Success(Unit)
             }catch (e: Exception){
+
+                Log.d("siginV" ,"$e")
                 _sigInResult.value=Result.Error(e.message ?: "Unknown error occurred")
             }
 

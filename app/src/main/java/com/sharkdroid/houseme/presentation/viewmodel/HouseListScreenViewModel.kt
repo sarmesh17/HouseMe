@@ -1,5 +1,6 @@
 package com.sharkdroid.houseme.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
@@ -23,6 +24,7 @@ class HouseListScreenViewModel @Inject constructor(
     private val _roomList = MutableStateFlow<List<RoomData>>(emptyList())
     val roomList=_roomList.asStateFlow()
 
+
     init {
         fetchRoomData()
     }
@@ -45,6 +47,7 @@ class HouseListScreenViewModel @Inject constructor(
                         }
 
                         _roomList.value=rooms
+                        Log.d("roomList",_roomList.value.toString())
                     }
 
 

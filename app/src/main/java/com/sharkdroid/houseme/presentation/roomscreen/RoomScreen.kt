@@ -1,11 +1,13 @@
 package com.sharkdroid.houseme.presentation.roomscreen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -31,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.R
+import com.sharkdroid.houseme.domain.model.RoomData
 import com.sharkdroid.houseme.presentation.bottomnavigation.BottomNavigation
 import com.sharkdroid.houseme.presentation.houselist.components.card.HouseListCardRowInfo
 import com.sharkdroid.houseme.presentation.navigation.Routes
@@ -44,12 +48,24 @@ fun RoomScreen(navController: NavHostController,houseListScreenViewModel: HouseL
     )
 
     val horizontalGradient = Brush.linearGradient(
-        colors = listOf(colorResource(id = R.color.Vivid_Sky_Blue), colorResource(id = R.color.Sea_Green))
+        colors = listOf(
+            colorResource(id = R.color.Vivid_Sky_Blue),
+            colorResource(id = R.color.Sea_Green)
+        )
     )
 
+    val list = houseListScreenViewModel.roomList.collectAsState()
     Scaffold(
-        topBar = @androidx.compose.runtime.Composable {
-            TopAppBar(title = { Text(text = "Available Rooms", color = Color.White, fontFamily = robotoFamily, fontSize = 18.sp) },
+        topBar =  {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Available Rooms",
+                        color = Color.White,
+                        fontFamily = robotoFamily,
+                        fontSize = 18.sp
+                    )
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = {},
@@ -74,51 +90,57 @@ fun RoomScreen(navController: NavHostController,houseListScreenViewModel: HouseL
         },
         bottomBar = {
 
-            BottomNavigation(selectedItem = 2, onClick = {index ->
-                when(index){
-                    0-> navController.navigate(Routes.HomeScreen)
-                    1->  navController.navigate(Routes.PlacesScreen)
-                    2-> { navController.navigate(Routes.RoomScreen); }
-                    3-> navController.navigate(Routes.BookingScreen)
-                    4-> navController.navigate(Routes.ProfileScreen)
+            BottomNavigation(selectedItem = 2, onClick = { index ->
+                when (index) {
+                    0 -> navController.navigate(Routes.HomeScreen)
+                    1 -> navController.navigate(Routes.PlacesScreen)
+                    2 -> {
+                        navController.navigate(Routes.RoomScreen); }
+
+                    3 -> navController.navigate(Routes.BookingScreen)
+                    4 -> navController.navigate(Routes.ProfileScreen)
                 }
-            } )
+            })
         }
-    ) {it ->
-        Modifier.padding(it)
+    ) {
 
         Column(
             modifier = Modifier
+                .padding(it)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
 
-            LazyColumn {
-                items(houseListScreenViewModel.roomList.value){
+//
 
-                    HouseListCardRowInfo(roomData = it)
+
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(list.value){data ->
+                    HouseListCardRowInfo(roomData = data)
                 }
             }
 
         }
-        Box(
-            modifier = Modifier
-                .padding(start = 300.dp, top = 650.dp)
-                .size(65.dp)
-                .background(
-                    brush = horizontalGradient,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .clickable { navController.navigate(Routes.OwnerValidationScreen) }
-
-        ) {
-            Text(
-                text = "+",
-                fontSize = 50.sp,
-                color = Color.White,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
     }
 }
+//
+//        Box(
+//            modifier = Modifier
+//                .padding(start = 300.dp, top = 650.dp)
+//                .size(65.dp)
+//                .background(
+//                    brush = horizontalGradient,
+//                    shape = RoundedCornerShape(16.dp)
+//                )
+//                .clickable { navController.navigate(Routes.OwnerValidationScreen) }
+//
+//        ) {
+//            Text(
+//                text = "+",
+//                fontSize = 50.sp,
+//                color = Color.White,
+//                modifier = Modifier.align(Alignment.Center)
+//            )
+//        }
+//    }
+//}
