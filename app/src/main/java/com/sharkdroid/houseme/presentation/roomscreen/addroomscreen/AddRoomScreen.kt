@@ -44,10 +44,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.sharkdroid.houseme.R
+import com.sharkdroid.houseme.presentation.viewmodel.AddRoomFormViewModel
 
-@Preview(showSystemUi = true)
 @Composable
-fun AddRoomScreen() {
+fun AddRoomScreen(
+    addRoomFormViewModel: AddRoomFormViewModel
+) {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
@@ -58,8 +60,8 @@ fun AddRoomScreen() {
         colors = listOf(colorResource(id = R.color.Vivid_Sky_Blue), colorResource(id = R.color.Sea_Green))
     )
 
-    var selectedCoverImage by remember { mutableStateOf<Uri?>(null) }
-    var selectedFoodImage by remember { mutableStateOf<Uri?>(null) }
+    var selectedRoomImageUri by remember { mutableStateOf<Uri?>(null) }
+    var selectedFoodImageUri by remember { mutableStateOf<Uri?>(null) }
 
     var description by remember {
         mutableStateOf("")
@@ -94,14 +96,14 @@ fun AddRoomScreen() {
                     contract = ActivityResultContracts.GetContent(),
                     onResult = { uri: Uri? ->
                         // Handle the image URI (set it to state)
-                        selectedCoverImage = uri
+                        selectedRoomImageUri = uri
                     }
                 )
 
 
-                if (selectedCoverImage != null) {
+                if (selectedRoomImageUri != null) {
                     Image(
-                        painter = rememberAsyncImagePainter(selectedCoverImage),
+                        painter = rememberAsyncImagePainter(selectedRoomImageUri),
                         contentDescription = null,
                         modifier = Modifier
                             .size(350.dp,200.dp),
@@ -190,13 +192,13 @@ fun AddRoomScreen() {
                     contract = ActivityResultContracts.GetContent(),
                     onResult = { uri: Uri? ->
                         // Handle the image URI (set it to state)
-                        selectedFoodImage= uri
+                        selectedFoodImageUri= uri
                     }
                 )
 
-                if (selectedFoodImage != null) {
+                if (selectedFoodImageUri != null) {
                     Image(
-                        painter = rememberAsyncImagePainter(selectedFoodImage),
+                        painter = rememberAsyncImagePainter(selectedFoodImageUri),
                         contentDescription = null,
                         modifier = Modifier
                             .size(350.dp,200.dp),
@@ -208,7 +210,7 @@ fun AddRoomScreen() {
                         contentDescription = null,
                         modifier = Modifier
                             .size(350.dp, 200.dp)
-                            .clickable { imagePickerLauncher.launch("image/*") }, // Trigger image picker when clicking the placeholder
+                            .clickable { imagePickerLauncherSecond.launch("image/*") }, // Trigger image picker when clicking the placeholder
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -227,7 +229,15 @@ fun AddRoomScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = {
+                        addRoomFormViewModel.uploadRoomAndFoodImages(foodImageUri = selectedFoodImageUri, roomImageUri = selectedRoomImageUri, description = description, checkIn = checkIn, checkOut = checkOut);
+                        selectedFoodImageUri=null
+                        selectedRoomImageUri=null
+                        description=""
+                        checkIn=""
+                        checkOut=""
+
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp)

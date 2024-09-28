@@ -27,6 +27,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,10 +47,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
 
-@Preview(showSystemUi = true)
 @Composable
-fun UserAuthentication() {
+fun OwnerAuthorizationForm(
+    ownerAuthViewModel: OwnerAuthViewModel
+) {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
@@ -228,7 +231,10 @@ fun UserAuthentication() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = {
+                        selectedImageUri?.let { ownerAuthViewModel.uploadImageToFirebaseStorage(it,phoneNumber,address,availableRoom)
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp)
