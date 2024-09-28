@@ -311,8 +311,8 @@ fun SignInScreen(
 
                         Row {
 
-                            Text(text = "By creating an account, you are agree to our ", color = Color.Gray)
-                            Text(text = "Term", color = colorResource(id = R.color.Caribbean_Green), fontWeight = FontWeight.SemiBold)
+                            Text(text = "By creating an account, you are agree to our ", color = Color.Gray, fontSize = 12.sp)
+                            Text(text = "Term", color = colorResource(id = R.color.Caribbean_Green), fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
 
                         }
 

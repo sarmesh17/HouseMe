@@ -18,7 +18,7 @@ fun HouseMeNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SignUpScreen
+        startDestination = Routes.HomeScreen
     ) {
 
         composable<Routes.HomeScreen> {
@@ -29,14 +29,14 @@ fun HouseMeNavigation() {
 
             val viewModel:SigInScreenViewModel= hiltViewModel()
 
-          SignInScreen( sigInScreenViewModel = viewModel , navHostController = navController)
+          SignInScreen( viewModel , navHostController = navController)
         }
 
         composable<Routes.SignUpScreen> {
 
             val viewModel:SignUpScreenViewModel= hiltViewModel()
 
-            SignUpScreen( signUpScreenViewModel = viewModel , navHostController = navController)
+            SignUpScreen( viewModel , navHostController = navController)
         }
 
 

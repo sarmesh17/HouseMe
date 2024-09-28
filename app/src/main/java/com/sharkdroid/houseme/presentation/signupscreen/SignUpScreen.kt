@@ -306,9 +306,10 @@ fun SignUpScreen(
                         Text(
                             text = "By creating an account, you are agree to our Terms",
                             color = Color.Gray,
-                            fontFamily = robotoFamily
+                            fontFamily = robotoFamily,
+                            fontSize = 12.sp
                         )
-                        Spacer(modifier = Modifier.height(50.dp))
+                        Spacer(modifier = Modifier.height(35.dp))
                         Row {
                             Text(
                                 text = "Already have an account?",
@@ -318,7 +319,7 @@ fun SignUpScreen(
                             Text(
                                 text = " Sign In",
                                 fontFamily = robotoFamily,
-                                color = Color.Green,
+                                color = colorResource(id = R.color.Caribbean_Green),
                                 modifier = Modifier.clickable { navHostController.navigate(Routes.SigInScreen) }
                             )
                         }
