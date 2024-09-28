@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.R
 
 @Composable
@@ -85,5 +86,5 @@ fun BottomNavigation(onClick:(index:Int) -> Unit, selectedItem: Int){
 data class NavigationItem(
     val name:String,
     @DrawableRes val selectedIcon: Int ,
-    @DrawableRes val unselectedIcon: Int
+    @DrawableRes val unselectedIcon: Int,
 )

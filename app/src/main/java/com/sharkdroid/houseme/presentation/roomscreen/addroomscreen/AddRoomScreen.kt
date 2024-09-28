@@ -75,6 +75,12 @@ fun AddRoomScreen(
     var roomName by remember {
         mutableStateOf("")
     }
+    var price by remember {
+        mutableStateOf("")
+    }
+    var discount by remember {
+        mutableStateOf("")
+    }
 
     Column (
         modifier = Modifier
@@ -151,8 +157,8 @@ fun AddRoomScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
                     OutlinedTextField(
-                        value = roomName,
-                        onValueChange = { roomName = it},
+                        value = price,
+                        onValueChange = { price = it},
                         modifier = Modifier.width(158.dp),
                         label = {
                             Text(text = "Price")
@@ -160,16 +166,14 @@ fun AddRoomScreen(
                     )
 
                     OutlinedTextField(
-                        value = roomName,
-                        onValueChange = { roomName = it},
+                        value = discount,
+                        onValueChange = { discount = it},
                         modifier = Modifier.width(158.dp),
                         label = {
                             Text(text = "Discount")
                         }
                     )
                 }
-
-
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
@@ -268,7 +272,7 @@ fun AddRoomScreen(
 
                 Button(
                     onClick = {
-                        addRoomFormViewModel.uploadRoomAndFoodImages(foodImageUri = selectedFoodImageUri, roomImageUri = selectedRoomImageUri, description = description, checkIn = checkIn, checkOut = checkOut);
+                        addRoomFormViewModel.uploadRoomAndFoodImages(foodImageUri = selectedFoodImageUri, roomImageUri = selectedRoomImageUri, description = description, checkIn = checkIn, checkOut = checkOut, roomName = roomName, price = price, discount = discount);
                         selectedFoodImageUri=null
                         selectedRoomImageUri=null
                         description=""

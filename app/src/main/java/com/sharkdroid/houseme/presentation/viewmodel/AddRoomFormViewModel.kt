@@ -19,6 +19,9 @@ class AddRoomFormViewModel @Inject constructor(
             roomImageUri: Uri?,
             foodImageUri: Uri?,
             description: String,
+            roomName:String,
+            price:String,
+            discount:String,
             checkIn: String,
             checkOut: String
         ) {
@@ -32,7 +35,7 @@ class AddRoomFormViewModel @Inject constructor(
                     .addOnSuccessListener {
                         roomImageRef.downloadUrl.addOnSuccessListener { roomImageUrl ->
                             // Save room image URL to the Realtime Database node
-                            saveRoomData(databaseReference, roomImageUrl.toString(), description, checkIn, checkOut)
+                            saveRoomData(databaseReference, roomImageUrl.toString(), description, checkIn, checkOut,roomName,price,discount)
                         }
                     }
                     .addOnFailureListener {
@@ -61,11 +64,17 @@ class AddRoomFormViewModel @Inject constructor(
             databaseReference: DatabaseReference,
             roomImageUrl: String,
             description: String,
+            roomName:String,
+            price:String,
+            discount:String,
             checkIn: String,
             checkOut: String
         ) {
             val roomData = mapOf(
                 "roomImageUrl" to roomImageUrl,
+                "roomName" to roomName,
+                "price" to price,
+                "discount" to discount,
                 "description" to description,
                 "checkIn" to checkIn,
                 "checkOut" to checkOut
