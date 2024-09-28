@@ -18,7 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -149,9 +151,12 @@ fun HomeScreen(navController: NavHostController) {
 
 
         Column (
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 60.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+
         ){
             Spacer(modifier = Modifier.height(5.dp))
             Image(painter = painterResource(id = R.drawable.house2), contentDescription =null, modifier = Modifier.size(350.dp,70.dp) )
@@ -168,7 +173,7 @@ fun HomeScreen(navController: NavHostController) {
                 OutlinedTextField(
                     value = searchText,
                     onValueChange = { searchText = it },
-                    label = {
+                    placeholder = {
                         Text(
                             text = "Where do you want",
                             fontSize =18.sp,
@@ -185,7 +190,6 @@ fun HomeScreen(navController: NavHostController) {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(60.dp)
                         .padding(start = 8.dp)
                         .menuAnchor(),
                     colors = OutlinedTextFieldDefaults.colors(
@@ -230,7 +234,7 @@ fun HomeScreen(navController: NavHostController) {
 
 
             //check in date
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
                 showDatePicker { selectedDate ->
                     checkInDate.value = selectedDate
@@ -259,7 +263,7 @@ fun HomeScreen(navController: NavHostController) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
             //check out date
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
                 showDatePicker { selectedDate ->
                     Log.d("checkin", selectedDate)
@@ -289,7 +293,7 @@ fun HomeScreen(navController: NavHostController) {
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
             // room and people selection
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             SelectionDropdown(
                 adults = adults,
                 children = children,
@@ -300,6 +304,7 @@ fun HomeScreen(navController: NavHostController) {
             )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
 
+            Spacer(modifier = Modifier.height(8.dp))
             // for radio selection
             Row(
                 modifier = Modifier
@@ -325,7 +330,7 @@ fun HomeScreen(navController: NavHostController) {
             }
 
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             //create account button
             Button(
                 onClick = { /*TODO*/ },
@@ -343,110 +348,121 @@ fun HomeScreen(navController: NavHostController) {
                     fontSize = 18.sp
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "BEST PLACES",
-                    fontSize = 14.sp,
-                    fontFamily = robotoFamily
-                )
-                Text(
-                    text = "VIEW ALL",
-                    fontSize = 14.sp,
-                    fontFamily = robotoFamily,
-                    color = colorResource(id = R.color.Azure)
-                )
-            }
+            Spacer(modifier = Modifier.height(32.dp))
 
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp)
-            ) {
-                items(rowItem) { rowItem ->
-                    Column (
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(91.dp, 60.dp)
-                        ) {
-                            // The image inside the Box
-                            Image(
-                                painter = painterResource(id = rowItem.icon),
-                                contentDescription = "img",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(12.dp)) // Round the image corners
-                            )
-                        }
+
+
+
+            Box {
+                Column {
+
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         Text(
-                            text = rowItem.name,
-                            fontSize = 12.sp,
+                            text = "BEST PLACES",
+                            fontSize = 14.sp,
                             fontFamily = robotoFamily
                         )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            HorizontalDivider()
-            Spacer(modifier = Modifier.height(8.dp))
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "HOME STAY",
-                    fontSize = 14.sp,
-                    fontFamily = robotoFamily
-                )
-                Text(
-                    text = "VIEW ALL",
-                    fontSize = 14.sp,
-                    fontFamily = robotoFamily,
-                    color = colorResource(id = R.color.Azure)
-                )
-            }
-
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp)
-            ) {
-                items(rowItem) { rowItem ->
-                    Column (
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(91.dp, 60.dp)
-                        ) {
-                            // The image inside the Box
-                            Image(
-                                painter = painterResource(id = rowItem.icon),
-                                contentDescription = "img",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(12.dp)) // Round the image corners
-                            )
-                        }
                         Text(
-                            text = rowItem.name,
-                            fontSize = 12.sp,
-                            fontFamily = robotoFamily
+                            text = "VIEW ALL",
+                            fontSize = 14.sp,
+                            fontFamily = robotoFamily,
+                            color = colorResource(id = R.color.Azure)
                         )
                     }
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp)
+                    ) {
+                        items(rowItem) { rowItem ->
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .size(91.dp, 60.dp)
+                                ) {
+                                    // The image inside the Box
+                                    Image(
+                                        painter = painterResource(id = rowItem.icon),
+                                        contentDescription = "img",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .clip(RoundedCornerShape(12.dp)) // Round the image corners
+                                    )
+                                }
+                                Text(
+                                    text = rowItem.name,
+                                    fontSize = 12.sp,
+                                    fontFamily = robotoFamily
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "HOME STAY",
+                            fontSize = 14.sp,
+                            fontFamily = robotoFamily
+                        )
+                        Text(
+                            text = "VIEW ALL",
+                            fontSize = 14.sp,
+                            fontFamily = robotoFamily,
+                            color = colorResource(id = R.color.Azure)
+                        )
+                    }
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp)
+                    ) {
+                        items(rowItem) { rowItem ->
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .size(91.dp, 60.dp)
+                                ) {
+                                    // The image inside the Box
+                                    Image(
+                                        painter = painterResource(id = rowItem.icon),
+                                        contentDescription = "img",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .clip(RoundedCornerShape(12.dp)) // Round the image corners
+                                    )
+                                }
+                                Text(
+                                    text = rowItem.name,
+                                    fontSize = 12.sp,
+                                    fontFamily = robotoFamily
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(75.dp))
                 }
             }
 
@@ -498,7 +514,7 @@ fun SelectionDropdown(
             )
             // Button to trigger dropdown
             TextButton(onClick = { expanded = true }) {
-                Text("Adults: $adults, Children: $children, Rooms: $rooms", fontFamily = robotoFamily, fontSize = 18.sp, color = Color.Black)
+                Text("Adults: $adults     Children: $children     Rooms: $rooms", fontFamily = robotoFamily, fontSize = 18.sp, color = Color.Black)
             }
             Spacer(modifier = Modifier.weight(1f))
             Icon(painter = painterResource(id = R.drawable.outline_keyboard_arrow_down_24), contentDescription = null, tint = Color.Black)

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "293246541079",
+    "firebase_url": "https://house-me-ecddb-default-rtdb.firebaseio.com",
     "project_id": "house-me-ecddb",
     "storage_bucket": "house-me-ecddb.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.sharkdroid.houseme"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "293246541079-l9qm500h28ap54q3l8iohbttl24fvs8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharkdroid.houseme",
+            "certificate_hash": "599f9d6a7292201b88e33cb880ef3ea02264095d"
+          }
+        },
+        {
+          "client_id": "293246541079-41p2sf3rg5ut1oe4m60p069q1ftrfu15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBCrfT3bBAnBs0XHo3uZVvtg04Y7XhDNNY"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293246541079-41p2sf3rg5ut1oe4m60p069q1ftrfu15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

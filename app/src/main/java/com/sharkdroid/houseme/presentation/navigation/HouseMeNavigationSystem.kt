@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sharkdroid.houseme.presentation.homescreen.HomeScreen
 import com.sharkdroid.houseme.presentation.siginscreen.SignInScreen
+import com.sharkdroid.houseme.presentation.signupscreen.SignUpScreen
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.SignUpScreenViewModel
 
@@ -17,7 +18,7 @@ fun HouseMeNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SigInScreen
+        startDestination = Routes.HomeScreen
     ) {
 
         composable<Routes.HomeScreen> {
@@ -28,8 +29,16 @@ fun HouseMeNavigation() {
 
             val viewModel:SigInScreenViewModel= hiltViewModel()
 
-          SignInScreen( sigInScreenViewModel = viewModel , navHostController = navController)
+          SignInScreen( viewModel , navHostController = navController)
         }
+
+        composable<Routes.SignUpScreen> {
+
+            val viewModel:SignUpScreenViewModel= hiltViewModel()
+
+            SignUpScreen( viewModel , navHostController = navController)
+        }
+
 
     }
 

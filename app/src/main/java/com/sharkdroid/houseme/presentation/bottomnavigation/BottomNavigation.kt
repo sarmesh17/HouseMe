@@ -40,8 +40,8 @@ fun BottomNavigation(onClick:(index:Int) -> Unit, selectedItem: Int){
 
     NavigationBar (modifier = Modifier
         .background(brush = horizontalGradient)
-        .padding(top = 8.dp)
-        .height(80.dp), containerColor = Color.Transparent
+        //.padding(top = 8.dp)
+        .height(58.dp), containerColor = Color.Transparent
         )
     {
         items.forEachIndexed { index, item ->
@@ -72,7 +72,7 @@ fun BottomNavigation(onClick:(index:Int) -> Unit, selectedItem: Int){
                             }else{
                                 Color.Black
                             },
-                            modifier = Modifier.size(30.dp)
+                            modifier = Modifier.size(24.dp)
                         )
                         Spacer(modifier = Modifier.width(2.dp))
                     }

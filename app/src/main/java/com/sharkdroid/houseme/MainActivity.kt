@@ -10,7 +10,14 @@ import com.sharkdroid.houseme.presentation.roomscreen.ownervalidationform.OwnerA
 import com.sharkdroid.houseme.presentation.viewmodel.AddRoomFormViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
 import com.sharkdroid.houseme.ui.theme.HouseMeTheme
+
+import com.google.firebase.FirebaseApp
+import com.sharkdroid.houseme.presentation.navigation.HouseMeNavigation
+import com.sharkdroid.houseme.presentation.siginscreen.SignInScreen
+import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
+import com.sharkdroid.houseme.ui.theme.HouseMeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -24,6 +31,7 @@ class MainActivity : ComponentActivity() {
 //                OwnerAuthorizationForm(ownerAuthViewModel = ownerAuthViewModel )
                 AddRoomScreen(addRoomFormViewModel = addRoomFormViewModel)
 
+                HouseMeNavigation()
             }
         }
     }
