@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -101,7 +103,23 @@ fun RoomScreen(navController: NavHostController,houseListScreenViewModel: HouseL
                     4 -> navController.navigate(Routes.ProfileScreen)
                 }
             })
-        }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate(Routes.OwnerValidationScreen) },
+                containerColor = colorResource(id = R.color.Vivid_Sky_Blue),
+                modifier = Modifier
+                    .size(65.dp)
+                    .background(
+                        brush = horizontalGradient,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+            ) {
+                Text(text = "+", fontSize = 40.sp, color = Color.White) // You can also use an Icon instead of Text
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
+
     ) {
 
         Column(
