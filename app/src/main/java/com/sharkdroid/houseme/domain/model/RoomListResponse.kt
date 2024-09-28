@@ -1,8 +1,13 @@
 package com.sharkdroid.houseme.domain.model
 
-data class RoomListResponse(
-    val coverImage: String? = null,
+data class RoomData(
+    val roomImageUrl: String? = null,
+    val roomName: String ,
+    val price: String? = null,
+    val discount: String? = null,
     val description: String? = null,
-    val roomName: String? = null,
-    val price: Double? = null,
-    val discount: Double? = null)
+    val checkIn: String? = null,
+    val checkOut: String? = null,
+    val foodImageUrl: String? = null,
+
+    )

@@ -27,9 +27,9 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,25 +43,28 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.sharkdroid.houseme.presentation.navigation.Routes
 import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
 
 @Composable
-fun OwnerAuthorizationForm(
+
+fun OwnerValidationScreen(
+    navController: NavHostController,
     ownerAuthViewModel: OwnerAuthViewModel
 ) {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
-    var name by remember {
-        mutableStateOf("")
-    }
-    var email by remember {
-        mutableStateOf("")
-    }
+//    var name by remember {
+//        mutableStateOf("")
+//    }
+//    var email by remember {
+//        mutableStateOf("")
+//    }
     var phoneNumber by remember {
         mutableStateOf("")
     }
@@ -84,6 +87,10 @@ fun OwnerAuthorizationForm(
     val gradient = Brush.linearGradient(
         colors = listOf(colorResource(id = R.color.Sea_Green), colorResource(id = R.color.Art_Blue))
     )
+    val name=ownerAuthViewModel.userName.collectAsState()
+
+    val email=ownerAuthViewModel.email.collectAsState()
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -114,15 +121,15 @@ fun OwnerAuthorizationForm(
                     )
                 }
                 OutlinedTextField(
-                    value = name,
-                    onValueChange = { name= it },
+                    value = name.value,
+                    onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = "Name :", color = Color.Black) },
                     enabled = false
                 )
                 OutlinedTextField(
-                    value = email,
-                    onValueChange = { email= it},
+                    value = email.value,
+                    onValueChange = {},
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = "Email :", color = Color.Black) },
                     enabled = false
@@ -233,7 +240,8 @@ fun OwnerAuthorizationForm(
                 Button(
                     onClick = {
                         selectedImageUri?.let { ownerAuthViewModel.uploadImageToFirebaseStorage(it,phoneNumber,address,availableRoom)
-                        }
+                        };
+                        navController.navigate(Routes.AddRoomScreen)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -243,7 +251,7 @@ fun OwnerAuthorizationForm(
                     colors = ButtonDefaults.buttonColors(Color.Transparent)
                 ) {
                     Text(
-                        text = "Update ",
+                        text = "Register",
                         fontSize = 16.sp,
                         fontFamily = robotoFamily
                     )

@@ -1,4 +1,4 @@
-package com.sharkdroid.houseme.presentation.hotellist.components.searchbar
+package com.sharkdroid.houseme.presentation.houselist.components.searchbar
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

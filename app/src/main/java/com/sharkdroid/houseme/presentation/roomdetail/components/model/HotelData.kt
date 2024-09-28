@@ -1,6 +1,6 @@
 package com.sharkdroid.houseme.presentation.roomdetail.components.model
 
-data class RoomData(
+data class RoomDetailData(
     val name: String,
     val rating: Float,
     val likes: Int,

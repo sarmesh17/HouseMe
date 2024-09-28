@@ -346,11 +346,13 @@ fun SignInScreen(
 
         is Result.Success -> {
 
+            Log.d("sigin","SiginSuccessful")
             navHostController.navigate(Routes.HomeScreen)
 
         }
 
         is Result.Error -> {
+
 
 
 

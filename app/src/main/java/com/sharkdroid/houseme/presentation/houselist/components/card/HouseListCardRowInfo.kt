@@ -1,8 +1,7 @@
-package com.sharkdroid.houseme.presentation.hotellist.components.card
+package com.sharkdroid.houseme.presentation.houselist.components.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,15 +24,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.sharkdroid.houseme.R
-import com.sharkdroid.houseme.presentation.hotellist.components.model.HotelListCardModel
+import com.sharkdroid.houseme.domain.model.RoomData
+import com.sharkdroid.houseme.presentation.viewmodel.HouseListScreenViewModel
 
 @Composable
-
-fun TryDesign(hotelListCardModel: HotelListCardModel) {
+fun HouseListCardRowInfo(
+    roomData: RoomData
+) {
     val gradient = Brush.linearGradient(
         colors = listOf(
             colorResource(id = R.color.AzureBlue),
@@ -47,19 +48,28 @@ fun TryDesign(hotelListCardModel: HotelListCardModel) {
     ) {
         Row {
 
-
-            Image(
-                painter = painterResource(id = hotelListCardModel.imageRes),
+            AsyncImage(
+                model = roomData.roomImageUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(70.dp)
                     .padding(vertical = 5.dp, horizontal = 4.dp)
                     .clip(shape = RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop
-            )
+            ).let {
+
+                Image(
+                    painter = painterResource(id = R.drawable.homestayimage),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(70.dp)
+                        .padding(vertical = 5.dp, horizontal = 4.dp)
+                        .clip(shape = RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop
+                )
+            }
             Column(modifier = Modifier.padding(all = 8.dp)) {
 
 
-                Text(text = hotelListCardModel.header, fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
+                Text(text = roomData.roomName, fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(modifier = Modifier) {
 
@@ -75,33 +85,39 @@ fun TryDesign(hotelListCardModel: HotelListCardModel) {
                     Spacer(modifier = Modifier.size(15.dp))
                     Text(text = "Reviews(200)", fontSize = 10.sp, color = Color.Gray)
                 }
-                Text(
-                    text = hotelListCardModel.description,
-                    fontSize = 10.sp,
-                    color = Color.DarkGray
-                )
+                roomData.description?.let {
+                    Text(
+                        text = it,
+                        fontSize = 10.sp,
+                        color = Color.DarkGray
+                    )
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 Row {
 
 
-                    Text(
-                        text = hotelListCardModel.discount,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colorResource(
-                            id = R.color.Goldenrod
+                    roomData.discount?.let {
+                        Text(
+                            text = it,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorResource(
+                                id = R.color.Goldenrod
+                            )
                         )
-                    )
+                    }
                     Spacer(modifier = Modifier.width(20.dp))
                     Row {
                         Text(text = "RS", fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
                         Spacer(modifier = Modifier.width(4.dp))
 
-                        Text(
-                            text = hotelListCardModel.price,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        roomData.price?.let {
+                            Text(
+                                text = it,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
 
                         Spacer(modifier = Modifier.width(20.dp))
                     }
@@ -125,7 +141,7 @@ fun TryDesign(hotelListCardModel: HotelListCardModel) {
                         )
 
                         {
-                            Text(text = hotelListCardModel.button,
+                            Text(text = "Book Now",
                                 fontSize = 8.sp, modifier = Modifier.align(Alignment.Center))
                         }
                     }

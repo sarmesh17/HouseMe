@@ -1,12 +1,15 @@
 package com.sharkdroid.houseme.presentation.roomscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,15 +27,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.sharkdroid.houseme.R
+import com.sharkdroid.houseme.presentation.bottomnavigation.BottomNavigation
+import com.sharkdroid.houseme.presentation.houselist.components.card.HouseListCardRowInfo
+import com.sharkdroid.houseme.presentation.navigation.Routes
+import com.sharkdroid.houseme.presentation.viewmodel.HouseListScreenViewModel
 
-@Preview(showSystemUi =  true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoomScreen() {
+fun RoomScreen(navController: NavHostController,houseListScreenViewModel: HouseListScreenViewModel) {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
@@ -66,6 +72,18 @@ fun RoomScreen() {
             )
 
         },
+        bottomBar = {
+
+            BottomNavigation(selectedItem = 2, onClick = {index ->
+                when(index){
+                    0-> navController.navigate(Routes.HomeScreen)
+                    1->  navController.navigate(Routes.PlacesScreen)
+                    2-> { navController.navigate(Routes.RoomScreen); }
+                    3-> navController.navigate(Routes.BookingScreen)
+                    4-> navController.navigate(Routes.ProfileScreen)
+                }
+            } )
+        }
     ) {it ->
         Modifier.padding(it)
 
@@ -76,17 +94,23 @@ fun RoomScreen() {
             verticalArrangement = Arrangement.Center
         ) {
 
-            Text(text = "Loading...")
+            LazyColumn {
+                items(houseListScreenViewModel.roomList.value){
+
+                    HouseListCardRowInfo(roomData = it)
+                }
+            }
 
         }
         Box(
             modifier = Modifier
-                .padding(start = 300.dp, top = 680.dp)
+                .padding(start = 300.dp, top = 650.dp)
                 .size(65.dp)
                 .background(
                     brush = horizontalGradient,
                     shape = RoundedCornerShape(16.dp)
                 )
+                .clickable { navController.navigate(Routes.OwnerValidationScreen) }
 
         ) {
             Text(
