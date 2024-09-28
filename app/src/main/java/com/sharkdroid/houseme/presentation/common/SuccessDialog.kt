@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +25,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -35,7 +32,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.sharkdroid.houseme.R
 
 @Composable
-fun ErrorDialogBox() {
+fun SuccessDialog() {
     val horizontalGradient = Brush.linearGradient(
         colors = listOf(
             colorResource(id = R.color.Vivid_Sky_Blue),
@@ -67,7 +64,7 @@ fun ErrorDialogBox() {
                 {
 
                     Image(
-                        painter = painterResource(id = R.drawable.exclamation),
+                        painter = painterResource(id = R.drawable.success_tick),
                         contentDescription = null, modifier = Modifier
                             .size(80.dp)
                             .padding(top = 16.dp)
@@ -82,7 +79,7 @@ fun ErrorDialogBox() {
                         .height(40.dp), contentAlignment = Alignment.Center
                 )
                 {
-                    Text(text = "error ", fontSize = 20.sp, fontFamily = robotoFamily)
+                    Text(text = "Success ", fontSize = 20.sp, fontFamily = robotoFamily)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 

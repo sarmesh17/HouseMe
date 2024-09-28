@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.sharkdroid.houseme.presentation.common.ErrorDialogBox
+import com.sharkdroid.houseme.presentation.common.SuccessDialog
 import com.sharkdroid.houseme.ui.theme.HouseMeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HouseMeTheme {
-
+                SuccessDialog()
             }
         }
     }
