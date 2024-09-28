@@ -46,10 +46,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.sharkdroid.houseme.presentation.navigation.Routes
 
 @Preview(showSystemUi = true)
 @Composable
-fun UserAuthentication() {
+fun Routes.OwnerValidationScreen() {
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )

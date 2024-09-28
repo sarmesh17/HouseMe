@@ -1,4 +1,4 @@
-package com.sharkdroid.houseme.presentation.hotellist
+package com.sharkdroid.houseme.presentation.houselist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,15 +29,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sharkdroid.houseme.R
-import com.sharkdroid.houseme.presentation.hotellist.components.HotelListTab
-import com.sharkdroid.houseme.presentation.hotellist.components.searchbar.SearchBar
+import com.sharkdroid.houseme.presentation.houselist.components.HouseListTab
+import com.sharkdroid.houseme.presentation.houselist.components.searchbar.SearchBar
 
 @Composable
 @Preview(showSystemUi = true)
-fun HotelListScreen() {
+fun HouseListScreen() {
 
     var selectedIndex by remember {
-        mutableStateOf(HotelListTab.Amenities)
+        mutableStateOf(HouseListTab.Amenities)
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -81,8 +81,8 @@ fun HotelListScreen() {
         ) {
             // tab for chats
             Tab(
-                selected = selectedIndex == HotelListTab.Amenities,
-                onClick = { selectedIndex = HotelListTab.Amenities },
+                selected = selectedIndex == HouseListTab.Amenities,
+                onClick = { selectedIndex = HouseListTab.Amenities },
                 modifier = Modifier.height(55.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -99,8 +99,8 @@ fun HotelListScreen() {
             }
 
             Tab(
-                selected = selectedIndex == HotelListTab.Filter,
-                onClick = { selectedIndex = HotelListTab.Filter }
+                selected = selectedIndex == HouseListTab.Filter,
+                onClick = { selectedIndex = HouseListTab.Filter }
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
 
@@ -116,8 +116,8 @@ fun HotelListScreen() {
             }
 
             Tab(
-                selected = selectedIndex == HotelListTab.Sort,
-                onClick = { selectedIndex = HotelListTab.Sort }) {
+                selected = selectedIndex == HouseListTab.Sort,
+                onClick = { selectedIndex = HouseListTab.Sort }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
 
                     Text(text = "Sort by", color = Color.Black)
