@@ -47,6 +47,13 @@ object AppModule {
         return Identity.getSignInClient(context)
     }
 
+    @Provides
+    @Singleton
+    @Named("root")
+    fun provideFirebaseDatabaseReference(database: FirebaseDatabase):DatabaseReference{
+        return database.reference
+    }
+
 
 
 }

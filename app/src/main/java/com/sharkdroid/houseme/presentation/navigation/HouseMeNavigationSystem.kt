@@ -6,15 +6,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sharkdroid.houseme.presentation.homescreen.HomeScreen
+import com.sharkdroid.houseme.presentation.profilescreen.ProfileScreen
 import com.sharkdroid.houseme.presentation.roomscreen.RoomScreen
 import com.sharkdroid.houseme.presentation.roomscreen.addroomscreen.AddRoomScreen
 import com.sharkdroid.houseme.presentation.roomscreen.ownervalidationform.OwnerValidationScreen
 import com.sharkdroid.houseme.presentation.siginscreen.SignInScreen
 import com.sharkdroid.houseme.presentation.signupscreen.SignUpScreen
+import com.sharkdroid.houseme.presentation.updateaccount.UpdateAccount
 import com.sharkdroid.houseme.presentation.viewmodel.AddRoomFormViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.HomeScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.HouseListScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.OwnerAuthViewModel
+import com.sharkdroid.houseme.presentation.viewmodel.ProfileViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.SigInScreenViewModel
 import com.sharkdroid.houseme.presentation.viewmodel.SignUpScreenViewModel
 
@@ -59,6 +62,15 @@ fun HouseMeNavigation() {
         composable<Routes.AddRoomScreen> {
             val addRoomScreen:AddRoomFormViewModel = hiltViewModel()
             AddRoomScreen(addRoomFormViewModel = addRoomScreen)
+        }
+
+        composable<Routes.ProfileScreen> {
+            val profileViewModel:ProfileViewModel = hiltViewModel()
+            ProfileScreen(navController, profileViewModel)
+        }
+
+        composable<Routes.UpdateAccount> {
+            UpdateAccount(navController)
         }
 
 
