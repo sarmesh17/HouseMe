@@ -24,7 +24,6 @@ import com.sharkdroid.houseme.presentation.viewmodel.SignUpScreenViewModel
 fun HouseMeNavigation(startDestination: Routes) {
 
     val navController = rememberNavController()
-Log.d("mytag",startDestination.toString())
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -65,7 +64,7 @@ Log.d("mytag",startDestination.toString())
 
         composable<Routes.HotelListScreen> {
             val homeScreenViewModel:HomeScreenViewModel= hiltViewModel()
-            HouseListScreen( )
+            HouseListScreen( homeScreenViewModel)
         }
 
 

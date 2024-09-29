@@ -23,14 +23,13 @@ class HomeScreenViewModel @Inject constructor(
     private val databaseRef = db.getReference("RoomForm")
 
     // MutableState for the list of RoomData and loading state
-    var hlo = MutableStateFlow<List<RoomData>>(emptyList())
-        private set
+
+    val data=MutableStateFlow<List<RoomData>>(emptyList())
 
 
     // Function to search for rooms based on location input with delay
     fun searchRoomsByLocation(locationInput: String) {
         viewModelScope.launch {
-
             val query = databaseRef.orderByChild("propertyLocation").equalTo(locationInput)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -39,10 +38,9 @@ class HomeScreenViewModel @Inject constructor(
                         for (roomSnapshot in dataSnapshot.children) {
                             val roomData = roomSnapshot.getValue(RoomData::class.java)
                             roomData?.let { roomList.add(it) }
+                            data.value = roomList
                         }
-                        hlo.value = roomList
                     } else {
-                        Log.d("com.sharkdroid.houseme.presentation.viewmodel.HomeScreenViewModel", "No rooms found")
                     }
                 }
 
