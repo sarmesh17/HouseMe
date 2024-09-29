@@ -44,13 +44,13 @@ sealed class Routes {
     data object ThankYouScreen:Routes()
 
     @Serializable
-    data object BookingScreen:Routes()
-
-    @Serializable
     data object ProfileScreen:Routes()
 
     @Serializable
     data object UpdateAccount:Routes()
+
+    @Serializable
+    data object BookingHistory:Routes()
 
 
 }
