@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.sharkdroid.houseme.domain.model.Result
+import com.sharkdroid.whatsappclone.domain.usecases.all_use_case.AppEntryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +27,9 @@ import javax.inject.Named
 @HiltViewModel
 class SigInScreenViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val oneTapClient: SignInClient // used to handle google one-tap sign-in requests.
+    private val oneTapClient: SignInClient,// used to handle google one-tap sign-in requests.,
+    private val appEntryUseCase: AppEntryUseCase
+
 ) : ViewModel() {
 
     val intentSenderLiveData = MutableLiveData<IntentSender?>()
@@ -47,7 +50,6 @@ class SigInScreenViewModel @Inject constructor(
 
                 // Firebase sign-in operation
                 firebaseAuth.signInWithEmailAndPassword(email, password).await()
-
                 _sigInResult.value = Result.Success(Unit)
             }catch (e: Exception){
 
@@ -124,5 +126,12 @@ class SigInScreenViewModel @Inject constructor(
             }
         }
     }
+
+    suspend fun saveAppEntry(){
+
+        appEntryUseCase.saveLoginEntry()
+
+    }
+
 
 }
