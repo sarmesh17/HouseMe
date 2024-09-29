@@ -64,6 +64,9 @@ fun SignUpScreen(
     var password by remember {
         mutableStateOf("")
     }
+    var photoUrl by remember {
+        mutableStateOf("")
+    }
     val robotoFamily = FontFamily(
         Font(R.font.roboto_medium)
     )
@@ -247,7 +250,8 @@ fun SignUpScreen(
                                     email,
                                     password,
                                     fullName,
-                                    number
+                                    number,
+                                    photoUrl
                                 )
                             },
                             modifier = Modifier

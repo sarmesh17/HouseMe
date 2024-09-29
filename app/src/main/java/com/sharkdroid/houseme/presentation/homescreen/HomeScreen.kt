@@ -130,7 +130,7 @@ fun HomeScreen(navController: NavHostController,homeScreenViewModel: HomeScreenV
                     0-> { navController.navigate(Routes.HomeScreen); }
                     1-> navController.navigate(Routes.PlacesScreen)
                     2-> navController.navigate(Routes.RoomScreen)
-                    3-> navController.navigate(Routes.BookingScreen)
+                    3-> navController.navigate(Routes.BookingHistory)
                     4-> navController.navigate(Routes.ProfileScreen)
                 }
             } )

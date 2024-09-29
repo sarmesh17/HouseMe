@@ -65,6 +65,13 @@ object AppModule {
 
         return AppEntryUseCase(ReadLoginEntry(localUserManager), SaveLoginEntry(localUserManager))
     }
+    @Provides
+    @Singleton
+    @Named("root")
+    fun provideFirebaseDatabaseReference(database: FirebaseDatabase):DatabaseReference{
+        return database.reference
+    }
+
 
 
 }

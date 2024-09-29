@@ -36,7 +36,7 @@ class SignUpScreenViewModel @Inject constructor(
     private val _signUpResult=MutableStateFlow<Result<Unit>>(Result.Default())
     val signUpResult=_signUpResult.asStateFlow()
 
-    fun signUpUser(email: String, password: String, name: String, mobileNumber: String) {
+    fun signUpUser(email: String, password: String, name: String, mobileNumber: String, photoUrl: String) {
         viewModelScope.launch {
             _signUpResult.value=Result.Loading()
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -45,7 +45,7 @@ class SignUpScreenViewModel @Inject constructor(
                             // User registered successfully, store user data
                             val user = firebaseAuth.currentUser
                         user?.let {
-                            saveUserData(it.uid, email, name, mobileNumber)
+                            saveUserData(it.uid, email, name, mobileNumber, photoUrl)
                             _signUpResult.value=Result.Success(Unit)
                         }
 
@@ -58,12 +58,12 @@ class SignUpScreenViewModel @Inject constructor(
         }
     }
 
-    private fun saveUserData(userId: String, email: String, name: String, mobileNumber: String) {
+    private fun saveUserData(userId: String, email: String, name: String, mobileNumber: String, photoUrl: String) {
         viewModelScope.launch {
 
 
             val userRef = database.getReference("users").child(userId)
-            val user = User(email, name, mobileNumber)
+            val user = User(email, name, mobileNumber, photoUrl)
 
             userRef.setValue(user).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
