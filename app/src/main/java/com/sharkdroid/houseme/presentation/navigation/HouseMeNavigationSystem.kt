@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sharkdroid.houseme.presentation.bookinghistory.BookingHistory
 import com.sharkdroid.houseme.presentation.homescreen.HomeScreen
+import com.sharkdroid.houseme.presentation.payment.components.PaymentScreenn
 import com.sharkdroid.houseme.presentation.profilescreen.ProfileScreen
 import com.sharkdroid.houseme.presentation.roomscreen.RoomScreen
 import com.sharkdroid.houseme.presentation.roomscreen.addroomscreen.AddRoomScreen
@@ -94,6 +95,10 @@ fun HouseMeNavigation(startDestination: Routes) {
         composable<Routes.HotelListScreen> {
             val homeScreenViewModel:HomeScreenViewModel= hiltViewModel()
             HouseListScreen( homeScreenViewModel)
+        }
+
+        composable<Routes.PaymentScreen> {
+            PaymentScreenn(navController)
         }
 
 

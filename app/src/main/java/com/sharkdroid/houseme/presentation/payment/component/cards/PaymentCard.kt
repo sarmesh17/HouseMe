@@ -33,7 +33,7 @@ import com.sharkdroid.houseme.R
 import com.sharkdroid.houseme.presentation.payment.component.models.CardContext
 
 @Composable
-fun PaymentCard(cardContext: CardContext){
+fun PaymentCard(){
     val gradient = Brush.linearGradient(
         colors = listOf(
             colorResource(id = R.color.AzureBlue),
@@ -68,7 +68,7 @@ fun PaymentCard(cardContext: CardContext){
                     )
                 )
                 Text(
-                    text = cardContext.title,
+                    text = "",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -78,12 +78,12 @@ fun PaymentCard(cardContext: CardContext){
                 value = cardNo,
                 onValueChange = { newText -> cardNo = newText },
                 colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent,unfocusedIndicatorColor = Color.White),
-                label = { Text(text = cardContext.cardNo, color = Color.LightGray) }, modifier = Modifier.padding(start = 8.dp))
+                label = { Text(text = "cardNo", color = Color.LightGray) }, modifier = Modifier.padding(start = 8.dp))
             TextField(
                 value = cardNo,
                 onValueChange = { newText -> cardNo = newText },
                 colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent,unfocusedIndicatorColor = Color.White),
-                label = { Text(text = cardContext.cardHolderName,color = Color.LightGray) }, modifier = Modifier.padding(start = 8.dp))
+                label = { Text(text = "cardHolderName",color = Color.LightGray) }, modifier = Modifier.padding(start = 8.dp))
             Row (modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)){
@@ -93,14 +93,14 @@ fun PaymentCard(cardContext: CardContext){
                     value = cardNo,
                     onValueChange = { newText -> cardNo = newText },
                     colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent, unfocusedIndicatorColor = Color.White),
-                    label = { Text(text = cardContext.expiryDate,color = Color.LightGray) }, modifier = Modifier.width(123.dp))
+                    label = { Text(text = "expiryDate",color = Color.LightGray) }, modifier = Modifier.width(123.dp))
                 Spacer(modifier = Modifier.width(70.dp))
 
                 TextField(
                     value = cardNo,
                     onValueChange = { newText -> cardNo = newText },
                     colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent,unfocusedIndicatorColor = Color.White),
-                    label = { Text(text =cardContext.cvv,color = Color.LightGray) }, modifier = Modifier.width(123.dp))
+                    label = { Text(text ="cardContext",color = Color.LightGray) }, modifier = Modifier.width(123.dp))
             }
 
         }
