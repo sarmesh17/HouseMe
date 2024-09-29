@@ -1,6 +1,7 @@
 package com.sharkdroid.houseme.presentation.houselist.components.card
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,13 +30,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sharkdroid.houseme.R
 import com.sharkdroid.houseme.domain.model.RoomData
+import com.sharkdroid.houseme.presentation.navigation.Routes
 
 @Composable
 fun HouseListCardRowInfo(
-    roomData: RoomData
+    roomData: RoomData, navController: NavController
 ) {
     val gradient = Brush.linearGradient(
         colors = listOf(
@@ -144,7 +147,7 @@ fun HouseListCardRowInfo(
                                 .background(
                                     brush = gradient,
                                     shape = RoundedCornerShape(2.dp)
-                                )
+                                ).clickable { navController.navigate(Routes.PaymentScreen) }
                         ) {
                             Text(
                                 text = "Book Now",
