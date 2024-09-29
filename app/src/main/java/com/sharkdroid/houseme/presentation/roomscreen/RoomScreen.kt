@@ -134,7 +134,7 @@ fun RoomScreen(navController: NavHostController,houseListScreenViewModel: HouseL
 
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(list.value){data ->
-                    HouseListCardRowInfo(roomData = data)
+                    HouseListCardRowInfo(roomData = data,navController)
                 }
             }
 

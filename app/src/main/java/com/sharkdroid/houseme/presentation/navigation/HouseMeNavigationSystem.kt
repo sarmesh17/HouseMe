@@ -1,7 +1,6 @@
 package com.sharkdroid.houseme.presentation.navigation
 
 import com.sharkdroid.houseme.presentation.houselist.HouseListScreen
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -10,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sharkdroid.houseme.presentation.bookinghistory.BookingHistory
 import com.sharkdroid.houseme.presentation.homescreen.HomeScreen
 import com.sharkdroid.houseme.presentation.payment.components.PaymentScreenn
+import com.sharkdroid.houseme.presentation.places.Places
 import com.sharkdroid.houseme.presentation.profilescreen.ProfileScreen
 import com.sharkdroid.houseme.presentation.roomscreen.RoomScreen
 import com.sharkdroid.houseme.presentation.roomscreen.addroomscreen.AddRoomScreen
@@ -37,7 +37,7 @@ fun HouseMeNavigation(startDestination: Routes) {
         composable<Routes.SplashScreen> {
             SplashScreen(
                 onTimeout = {
-                    navController.navigate(Routes.SigInScreen){
+                    navController.navigate(Routes.SigInScreen) {
                         popUpTo<Routes.SplashScreen> {
                             inclusive = true
                         }
@@ -47,27 +47,27 @@ fun HouseMeNavigation(startDestination: Routes) {
         }
 
         composable<Routes.HomeScreen> {
-            val homeScreenViewModel:HomeScreenViewModel = hiltViewModel()
+            val homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
             HomeScreen(navController, homeScreenViewModel)
         }
 
         composable<Routes.SigInScreen> {
 
-            val viewModel:SigInScreenViewModel= hiltViewModel()
+            val viewModel: SigInScreenViewModel = hiltViewModel()
 
-          SignInScreen( viewModel , navHostController = navController)
+            SignInScreen(viewModel, navHostController = navController)
         }
 
         composable<Routes.SignUpScreen> {
 
-            val viewModel:SignUpScreenViewModel= hiltViewModel()
+            val viewModel: SignUpScreenViewModel = hiltViewModel()
 
-            SignUpScreen( viewModel , navHostController = navController)
+            SignUpScreen(viewModel, navHostController = navController)
         }
 
         composable<Routes.RoomScreen> {
-            val houseListScreenViewModel:HouseListScreenViewModel= hiltViewModel()
-            RoomScreen(navController,houseListScreenViewModel)
+            val houseListScreenViewModel: HouseListScreenViewModel = hiltViewModel()
+            RoomScreen(navController, houseListScreenViewModel)
         }
         composable<Routes.OwnerValidationScreen> {
             val ownerAuthValidation: OwnerAuthViewModel = hiltViewModel()
@@ -75,12 +75,12 @@ fun HouseMeNavigation(startDestination: Routes) {
         }
 
         composable<Routes.AddRoomScreen> {
-            val addRoomScreen:AddRoomFormViewModel = hiltViewModel()
+            val addRoomScreen: AddRoomFormViewModel = hiltViewModel()
             AddRoomScreen(addRoomFormViewModel = addRoomScreen)
         }
 
         composable<Routes.ProfileScreen> {
-            val profileViewModel:ProfileViewModel = hiltViewModel()
+            val profileViewModel: ProfileViewModel = hiltViewModel()
             ProfileScreen(navController, profileViewModel)
         }
 
@@ -93,12 +93,16 @@ fun HouseMeNavigation(startDestination: Routes) {
         }
 
         composable<Routes.HotelListScreen> {
-            val homeScreenViewModel:HomeScreenViewModel= hiltViewModel()
-            HouseListScreen( homeScreenViewModel)
+            val homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
+            HouseListScreen(navController)
         }
 
         composable<Routes.PaymentScreen> {
             PaymentScreenn(navController)
+        }
+
+        composable<Routes.PlacesScreen> {
+            Places(navController)
         }
 
 
